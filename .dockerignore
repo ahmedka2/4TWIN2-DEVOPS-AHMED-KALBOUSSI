@@ -1,0 +1,8 @@
+# Ignore build output and local files that shouldn't be copied into the image
+target
+.mvn
+.git
+.gitignore
+*.iml
+*.log
+/.idea
