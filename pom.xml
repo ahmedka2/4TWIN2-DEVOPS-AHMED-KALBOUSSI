@@ -123,9 +123,17 @@
                                     </limits>
                                 </rule>
                             </rules>
+                            <excludes>
+                                <exclude>**/StudentManagementApplication.class</exclude>
+                            </excludes>
                         </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <excludes>
+                        <exclude>**/StudentManagementApplication.class</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
