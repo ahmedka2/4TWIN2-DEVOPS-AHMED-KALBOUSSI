@@ -81,6 +81,18 @@ class EnrollmentServiceTest {
     }
 
     @Test
+    void testGetEnrollmentById_NotFound() {
+        // Arrange
+        when(enrollmentRepository.findById(999L)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(java.util.NoSuchElementException.class, () -> {
+            enrollmentService.getEnrollmentById(999L);
+        });
+        verify(enrollmentRepository, times(1)).findById(999L);
+    }
+
+    @Test
     void testSaveEnrollment() {
         // Arrange
         when(enrollmentRepository.save(any(Enrollment.class))).thenReturn(enrollment1);

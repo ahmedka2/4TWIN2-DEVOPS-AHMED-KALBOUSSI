@@ -80,6 +80,18 @@ class DepartmentServiceTest {
     }
 
     @Test
+    void testGetDepartmentById_NotFound() {
+        // Arrange
+        when(departmentRepository.findById(999L)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(java.util.NoSuchElementException.class, () -> {
+            departmentService.getDepartmentById(999L);
+        });
+        verify(departmentRepository, times(1)).findById(999L);
+    }
+
+    @Test
     void testSaveDepartment() {
         // Arrange
         when(departmentRepository.save(any(Department.class))).thenReturn(department1);
