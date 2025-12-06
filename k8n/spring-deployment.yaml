@@ -13,6 +13,10 @@ spec:
       labels:
         app: spring-app
     spec:
+      initContainers:
+        - name: wait-for-mysql
+          image: busybox:1.28
+          command: ['sh', '-c', 'until nc -z mysql-service 3306; do echo waiting for mysql; sleep 2; done;']
       containers:
         - name: spring-container
           image: ahmedkalboussi/student-app:latest
@@ -49,3 +53,19 @@ spec:
                 configMapKeyRef:
                   name: spring-config
                   key: SERVER_SERVLET_CONTEXT_PATH
+          readinessProbe:
+            httpGet:
+              path: /student/actuator/health
+              port: 8089
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /student/actuator/health
+              port: 8089
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
